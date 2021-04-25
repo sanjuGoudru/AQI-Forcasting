@@ -10,6 +10,8 @@ from flask import Flask,render_template,redirect,url_for,session
 import pickle
 from tensorflow import keras
 from forms import AQIPredictionForm,LSTMForecastForm
+import pandas as pd, numpy as np
+from utils import Utils
 
 
 def load_models():
@@ -34,7 +36,57 @@ def get_test_rmse():
     rmse_dict['svm'] = 24.34
     return rmse_dict
     
+def predict_res(data,model_name=None):
+    scaled_data = Utils.scale_data(data)
+    df = pd.DataFrame(scaled_data,columns=['PM2.5', 'PM10', 'NO', 'NO2', 'NOx', 'NH3', 'CO', 'SO2', 'O3', 'Benzene', 'Toluene', 'Time_Season_Mean'])
+        
+    aqi = dict()
+
+    for mod_name, model in models.items():
+        if mod_name=='lstm':
+            continue
+        temp = model.predict(df)
+        aqi[mod_name] = Utils.scale_aqi(temp)
+        
+    return aqi
     
+    
+def get_lstm_forecast(time_step,data_size):
+    print("\n\n---------------------\n\n")
+    print(f"time_step:{time_step}\n data_size:{data_size}\n")
+    print("\n\n---------------------\n\n")
+            
+    X,y = Utils.load_test_data()
+    data = pd.concat([X,y],axis=1)
+            
+    n_steps = 40
+    X,y = Utils.split_sequences(data.to_numpy(),n_steps=n_steps)
+            
+    print("\n\n---------------------\n\n")
+    print(f"X:{X.shape}\n y:{y.shape}\n")
+    print("\n\n---------------------\n\n")
+            
+    model = models['lstm']
+    sc_y = pickle.load(open('Data/y_scaler.pkl', 'rb'))
+            
+    X_input = X[-(data_size+time_step):]
+    y_input = y[-(data_size+time_step):]
+            
+    print("\n\n---------------------\n\n")
+    print(f"X_input:{X_input.shape}\ny_input:{y_input.shape}\n")
+    print("\n\n---------------------\n\n")
+            
+    true_aqi, pred_aqi = Utils.get_forecast(X_input, y_input, time_step, data_size,model)
+                
+    before_aqi = sc_y.inverse_transform(y[-(data_size+30):-data_size,-1].reshape(-1, 1))
+    true_aqi = sc_y.inverse_transform(np.array(true_aqi).reshape(-1, 1))
+    pred_aqi = sc_y.inverse_transform(np.array(pred_aqi).reshape(-1, 1))
+            
+    img = Utils.get_image(before_aqi,true_aqi,pred_aqi,data_size)
+            
+    return img
+
+
 models = load_models()
 models_test_rmse = get_test_rmse()    
 
@@ -59,7 +111,7 @@ def home():
 @app.route('/predict')
 def predict():
     data = session['data']
-    aqi = Utils.predict_res(data)
+    aqi = predict_res(data)
     return render_template('result.html',aqi_dict=aqi,models_test_rmse=models_test_rmse)
 
 
@@ -70,7 +122,7 @@ def lstm_forecast():
     if form.validate_on_submit():
         time_step = form.time_step.data
         data_size = form.data_size.data
-        fig = Utils.get_lstm_forecast(time_step=time_step,data_size = data_size)
+        fig = get_lstm_forecast(time_step=time_step,data_size = data_size)
         
         if os.path.exists('static/temp_plots/plot.png'):
             os.remove("static/temp_plots/plot.png")
