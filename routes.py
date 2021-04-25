@@ -1,21 +1,29 @@
 # -*- coding: utf-8 -*-
 
-from app import app
-from flask import render_template,redirect,url_for,request
+from __main__ import app
+from flask import render_template,redirect,url_for,session
 from forms import AQIPredictionForm
-from utils import predict,process_form_data
+from utils import Utils,models_test_rmse
 
-@app.route('/', methods=['POST'])
+@app.route('/', methods=['POST','GET'])
 def home():
     form = AQIPredictionForm()
-    
+        
     if form.validate_on_submit():
-        data = process_form_data(form)
-        return redirect(url_for('predict',data=data))
+        data = Utils.process_form_data(form)
+        session['data']=data
+        return redirect(url_for('predict'))
     return render_template('home.html',form=form)
+
+
 
 @app.route('/predict')
 def predict():
-    data = request.args['data']
-    aqi = predict(data,model_name='XGB')
-    return render_template('predict.html',aqi=aqi)
+    data = session['data']
+    aqi = Utils.predict_res(data)
+    return render_template('result.html',aqi_dict=aqi,models_test_rmse=models_test_rmse)
+
+
+@app.route('/forecast')
+def lstm_forecast():
+    return render_template('lstm_forecast.html')
