@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask_wtf import FlaskForm
-from wtforms import SubmitField,FloatField,DateTimeField
+from wtforms import SubmitField,FloatField,DateTimeField,IntegerField
 from wtforms.validators import DataRequired,NumberRange
 class AQIPredictionForm(FlaskForm):
     pm2_5 = FloatField('PM 2.5',
@@ -39,4 +39,17 @@ class AQIPredictionForm(FlaskForm):
     date_time = DateTimeField('Date and Time',id='datetime')
     
     submit = SubmitField("Predict AQI")
+    
+    
+class LSTMForecastForm(FlaskForm):
+    time_step = IntegerField('Time Step',
+                             validators=[DataRequired('This field cannot be empty'),
+                                   NumberRange(min=0,max=10)])
+    
+    data_size = IntegerField('Number of Records to be considered',
+                             validators=[DataRequired('This field cannot be empty'),
+                                   NumberRange(min=100)])
+    
+    submit = SubmitField("Forcast AQI")
+    
     

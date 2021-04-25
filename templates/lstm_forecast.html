@@ -1,7 +1,46 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-  <div class="content-section">
-    <h1>Hello</h1>
-  </div>
+<div class="content-section">
+    <form action="" method="post">
+      {{ form.hidden_tag() }}
+      <fieldset class="form-group">
+        <legend class="border-bottom mb-4">AQI Forecast</legend>
+
+        <div class="form-group">
+          {{ form.time_step.label(class="form-control-label") }}
+
+          {% if form.time_step.errors %}
+            {{ form.time_step(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.time_step.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.time_step(class="form-control form-control-lg") }}
+          {% endif %}
+        </div>
+        <div class="form-group">
+          {{ form.data_size.label(class="form-control-label") }}
+
+          {% if form.data_size.errors %}
+            {{ form.data_size(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.data_size.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.data_size(class="form-control form-control-lg") }}
+          {% endif %}
+        </div>
+
+      <div class="form-group">
+        {{ form.submit(class="btn btn-primary") }}
+      </div>
+    </fieldset>
+  </form>
+</div>
+
 {% endblock content %}
