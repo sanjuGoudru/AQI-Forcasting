@@ -36,8 +36,7 @@ class AQIPredictionForm(FlaskForm):
     toluene = FloatField('Toluene',
                        validators=[DataRequired('This field cannot be empty'),
                                    NumberRange(min=0.0,message="This field should be positive")])
-    date_time = DateTimeField('Date and Time',
-                       validators=[DataRequired('This field cannot be empty')])
+    date_time = DateTimeField('Date and Time',id='datetime')
     
     submit = SubmitField("Predict AQI")
     
