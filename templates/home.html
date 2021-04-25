@@ -1,0 +1,196 @@
+{% extends 'layout.html' %}
+{% block head %}
+  {{ super() }}
+
+  <link type="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
+{% endblock head %}
+
+{% block scripts %}
+  {{ super() }}
+  
+{% endblock scripts %}
+
+{% block content %}
+<div class="content-section">
+    <form action="" method="post">
+      {{ form.hidden_tag() }}
+      <fieldset class="form-group">
+        <legend class="border-bottom mb-4">AQI Prediction</legend>
+        <div class="form-group">
+          {{ form.pm2_5.label(class="form-control-label") }}
+
+          {% if form.pm2_5.errors %}
+            {{ form.pm2_5(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.pm2_5.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.pm2_5(class="form-control form-control-lg") }}
+          {% endif %}
+        </div>
+        <div class="form-group">
+          {{ form.pm10.label(class="form-control-label") }}
+
+          {% if form.pm10.errors %}
+            {{ form.pm10(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.pm10.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.pm10(class="form-control form-control-lg") }}
+          {% endif %}
+        </div>
+        <div class="form-group">
+          {{ form.no.label(class="form-control-label") }}
+
+          {% if form.no.errors %}
+            {{ form.no(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.no.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.no(class="form-control form-control-lg") }}
+          {% endif %}
+        </div>
+        <div class="form-group">
+          {{ form.no2.label(class="form-control-label") }}
+
+          {% if form.no2.errors %}
+            {{ form.no2(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.no2.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.no2(class="form-control form-control-lg") }}
+          {% endif %}
+        </div>
+        <div class="form-group">
+          {{ form.nox.label(class="form-control-label") }}
+
+          {% if form.nox.errors %}
+            {{ form.nox(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.nox.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.nox(class="form-control form-control-lg") }}
+          {% endif %}
+        </div>
+        <div class="form-group">
+          {{ form.nh3.label(class="form-control-label") }}
+
+          {% if form.nh3.errors %}
+            {{ form.nh3(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.nh3.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.nh3(class="form-control form-control-lg") }}
+          {% endif %}
+        </div>
+        <div class="form-group">
+          {{ form.co.label(class="form-control-label") }}
+
+          {% if form.co.errors %}
+            {{ form.co(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.co.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.co(class="form-control form-control-lg") }}
+          {% endif %}
+        </div>
+        <div class="form-group">
+          {{ form.so2.label(class="form-control-label") }}
+
+          {% if form.so2.errors %}
+            {{ form.so2(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.so2.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.so2(class="form-control form-control-lg") }}
+          {% endif %}
+        </div>
+        <div class="form-group">
+          {{ form.o3.label(class="form-control-label") }}
+
+          {% if form.o3.errors %}
+            {{ form.o3(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.o3.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.o3(class="form-control form-control-lg") }}
+          {% endif %}
+        </div>
+        <div class="form-group">
+          {{ form.benzene.label(class="form-control-label") }}
+
+          {% if form.benzene.errors %}
+            {{ form.benzene(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.benzene.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.benzene(class="form-control form-control-lg") }}
+          {% endif %}
+        </div>
+        <div class="form-group">
+          {{ form.toluene.label(class="form-control-label") }}
+
+          {% if form.toluene.errors %}
+            {{ form.toluene(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.toluene.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+          {{ form.toluene(class="form-control form-control-lg") }}
+        {% endif %}
+      </div>
+      <div class="form-group">
+        {{ form.date_time.label(class="form-control-label") }}
+
+        {% if form.date_time.errors %}
+          {{ form.date_time(class="form-control form-control-lg is-invalid") }}
+          <div class="invalid-feedback">
+            {% for error in form.date_time.errors %}
+              <span>{{ error }}</span>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div id="datetime_div">
+            {{ form.date_time(class="form-control form-control-lg") }}
+          </div>
+        {% endif %}
+      </div>
+      <div class="form-group">
+        {{ form.submit(class="btn btn-primary") }}
+      </div>
+    </fieldset>
+  </form>
+</div>
+
+{% endblock content %}

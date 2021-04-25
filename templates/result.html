@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+{% block content %}
+  <div class="content-section">
+    <br><br><br>
+    <table class="table table-hover table-bordered border-dark align-middle table-responsive caption-top">
+      <caption>List of ML models and their prediction result</caption>
+      <thead>
+        <tr class="table-dark">
+          <th scope="col">Model used</th>
+          <th scope="col">Predicted AQI</th>
+          <th scope="col">RMSE on test data</th>
+        </tr>
+      </thead>
+      <tbody >
+        {% for mod_name,res in aqi_dict.items() %}
+          <tr>
+            <th scope="row" class="table-info">{{ mod_name }}</th>
+            <th class="table-secondary">{{ res[0][0]|round(2) }}</th>
+            <th class="table-secondary">{{ models_test_rmse[mod_name] }}</th>
+          </tr>
+        {% endfor %}
+      </tbody>
+
+    </table>
+  </div>
+{% endblock content %}
