@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from __main__ import app, models_test_rmse
-from flask import render_template,redirect,url_for,session,Response,jsonify
+from flask import render_template,redirect,url_for,session
 from forms import AQIPredictionForm,LSTMForecastForm
 from utils import Utils
-from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
-import io,os
+import os
 
 @app.route('/', methods=['POST','GET'])
 def home():
