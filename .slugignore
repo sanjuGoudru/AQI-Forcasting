@@ -1,6 +1,7 @@
 /Data/city_hour.csv
 /Data/blr_data_final.csv
 /Data/blr_city_data.csv
-/Data/Final/Time_series
+*.npy
+*.ipynb
 /Data/Final/X_train_sc.csv
 /Data/Final/y_train_sc.csv
