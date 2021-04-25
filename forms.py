@@ -43,8 +43,7 @@ class AQIPredictionForm(FlaskForm):
     
 class LSTMForecastForm(FlaskForm):
     time_step = IntegerField('Time Step',
-                             validators=[DataRequired('This field cannot be empty'),
-                                   NumberRange(min=0,max=10)])
+                             validators=[NumberRange(min=0,max=10)])
     
     data_size = IntegerField('Number of Records to be considered',
                              validators=[DataRequired('This field cannot be empty'),
